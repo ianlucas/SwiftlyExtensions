@@ -1,6 +1,6 @@
 namespace SwiftlyExtensions.Services;
 
-public interface IExtensionService
+public interface ISwiftlyExtensionsService
 {
     public IServerSideClientManager ServerSideClientManager { get; }
 }

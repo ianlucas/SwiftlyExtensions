@@ -26,6 +26,7 @@ public static class PlayerPawnExtensions
     {
         if (GameFunctions.IsAbleToApplySprayFn == null)
             throw new Exception("Extensions aren't initialized yet.");
-        return GameFunctions.IsAbleToApplySprayFn.Call(pawn.Address, ptr, pvecForward, pvecRight) == nint.Zero;
+        return GameFunctions.IsAbleToApplySprayFn.Call(pawn.Address, ptr, pvecForward, pvecRight)
+            == nint.Zero;
     }
 }

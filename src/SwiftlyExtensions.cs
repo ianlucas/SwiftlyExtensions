@@ -25,8 +25,8 @@ public partial class SwiftlyExtensions : BasePlugin
 
     public override void ConfigureSharedInterface(IInterfaceManager interfaceManager)
     {
-        interfaceManager.AddSharedInterface<IExtensionService, SwiftlyExtensionsService>(
-            "Extension.Service",
+        interfaceManager.AddSharedInterface<ISwiftlyExtensionsService, SwiftlyExtensionsService>(
+            "SwiftlyExtensions.Service",
             _extensionsService
         );
     }
