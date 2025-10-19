@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwiftlyS2Extensions", "SwiftlyS2Extensions.csproj", "{788545D3-0789-E2D5-4CAD-818DDF211802}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwiftlyExtensions", "SwiftlyExtensions.csproj", "{788545D3-0789-E2D5-4CAD-818DDF211802}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
