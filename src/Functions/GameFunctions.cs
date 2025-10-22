@@ -3,10 +3,7 @@ using SwiftlyS2.Shared.Memory;
 
 namespace SwiftlyExtensions.Functions;
 
-/// <summary>
-/// Internal class for managing game function signatures and native interop.
-/// </summary>
-internal static class GameFunctions
+public static class GameFunctions
 {
     public delegate nint IsAbleToApplySprayDelegate(
         nint pawnPtr,
@@ -27,30 +24,42 @@ internal static class GameFunctions
         int a7
     );
 
-    internal static IUnmanagedFunction<IsAbleToApplySprayDelegate>? IsAbleToApplySprayFn = null;
+    public static IUnmanagedFunction<IsAbleToApplySprayDelegate>? IsAbleToApplySprayFn
+    {
+        get;
+        internal set;
+    } = null;
 
-    internal static IUnmanagedFunction<SetSignonStateDelegate>? SetSignonStateFn = null;
+    public static IUnmanagedFunction<SetSignonStateDelegate>? SetSignonStateFn
+    {
+        get;
+        internal set;
+    } = null;
 
-    internal static IUnmanagedFunction<ConnectDelegate>? ConnectFn = null;
+    public static IUnmanagedFunction<ConnectDelegate>? ConnectFn { get; internal set; } = null;
 
-    private static void RegisterFunction<TDelegate>(
+    private static IUnmanagedFunction<TDelegate>? RegisterFunction<TDelegate>(
         ISwiftlyCore core,
-        string signature,
-        ref IUnmanagedFunction<TDelegate>? functionField
+        string signature
     )
         where TDelegate : Delegate
     {
         nint? address = core.GameData.GetSignature(signature);
-        if (address is not null)
-        {
-            functionField = core.Memory.GetUnmanagedFunctionByAddress<TDelegate>(address.Value);
-        }
+        return address is not null
+            ? core.Memory.GetUnmanagedFunctionByAddress<TDelegate>(address.Value)
+            : null;
     }
 
     internal static void Initialize(ISwiftlyCore core)
     {
-        RegisterFunction(core, "CCSPlayerPawn::IsAbleToApplySpray", ref IsAbleToApplySprayFn);
-        RegisterFunction(core, "CServerSideClientBase::SetSignonState", ref SetSignonStateFn);
-        RegisterFunction(core, "CServerSideClientBase::Connect", ref ConnectFn);
+        IsAbleToApplySprayFn = RegisterFunction<IsAbleToApplySprayDelegate>(
+            core,
+            "CCSPlayerPawn::IsAbleToApplySpray"
+        );
+        SetSignonStateFn = RegisterFunction<SetSignonStateDelegate>(
+            core,
+            "CServerSideClientBase::SetSignonState"
+        );
+        ConnectFn = RegisterFunction<ConnectDelegate>(core, "CServerSideClientBase::Connect");
     }
 }
